@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Quantity Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 80px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            margin: 10px 0;
+            background-color: #0F52BA;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .product-info {
+            text-align: center;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Stock Level Manager</h2>
+
+        <!-- Display product information here -->
+        <div class="product-info">
+            <p><strong>Product Code:</strong> <span id="product-code">Loading...</span></p>
+            <p><strong>Product Name:</strong> <span id="product-name">Loading...</span></p>
+        </div>
+
+        <!-- Input field to display and modify quantity -->
+        <input type="number" id="quantity-input" value="0" min="0" step="1">
+
+        <!-- Buttons for adding and removing quantity -->
+        <button onclick="adjustQuantity('Add to stock')">Add</button>
+        <button onclick="adjustQuantity('Remove from stock')">Remove</button>
+    </div>
+
+    <script>
+        let productCode = 'PROD1234'; // Default, will be updated by QR scan
+        let productName = 'Sample Product'; // Default, will be updated by QR scan
+        let currentQuantity = 0; // Default quantity
+
+        // Function to adjust quantity
+        function adjustQuantity(action) {
+            const quantityInput = document.getElementById('quantity-input');
+            let currentQty = parseInt(quantityInput.value, 10);
+
+            if (action === 'add') {
+                currentQty += 1;
+            } else if (action === 'remove') {
+                currentQty -= 1;
+                if (currentQty < 0) currentQty = 0; // Prevent negative quantity
+            }
+
+            // Update quantity input field
+            quantityInput.value = currentQty;
+
+            // Sync the new quantity with the backend (future step)
+            syncWithBackend(productCode, currentQty);
+        }
+
+        // Simulate backend sync with a function (you'll connect it to an actual backend in future)
+        function syncWithBackend(productCode, quantity) {
+            console.log(`Syncing to backend: Product Code: ${productCode}, New Quantity: ${quantity}`);
+            // Example: Fetch API or another method to update data in real-time
+        }
+
+        // This function will run when the page loads to grab the QR code data
+        function init
